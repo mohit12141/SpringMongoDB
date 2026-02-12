@@ -2,13 +2,9 @@ package com.mongo_project.controller;
 
 import org.springframework.web.bind.annotation.RestController;
 
-import com.mongo_project.entity.Comment;
 import com.mongo_project.entity.CommentResponse;
 import com.mongo_project.service.CommentService;
 
-import java.util.List;
-
-import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
