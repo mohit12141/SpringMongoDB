@@ -29,12 +29,12 @@ public class MongoDBDemoController {
     }
 
     @GetMapping("/comment")
-    public ResponseEntity<List<Comment>> getAllComment(@RequestParam int page, @RequestParam int size){
-        Page<Comment> comments = commentService.getComment(page, size);
-        if(comments.isEmpty()){
+    public ResponseEntity<CommentResponse> getAllComment(@RequestParam int page, @RequestParam int size){
+        CommentResponse response = commentService.getComment(page, size);
+        if(response.getComments() == null || response.getComments().isEmpty()){
             return ResponseEntity.noContent().build();
         } 
-        return ResponseEntity.ok(comments.getContent());
+        return ResponseEntity.ok(response);
     }
     
     @GetMapping("/email")

@@ -21,8 +21,10 @@ public class CommentService {
         this.commentRepository = commentRepository;
     }
 
-    public Page<Comment> getComment(int page, int size) {
-        return commentRepository.findAll(PageRequest.of(page, size));
+    public CommentResponse getComment(int page, int size) {
+        Page<Comment> comments = commentRepository.findAll(PageRequest.of(page, size));
+        return  new CommentResponse("200", "Retrieved successfully", comments.getContent());
+
     }
 
     public CommentResponse getCommentStartingWithEmail(String email){
