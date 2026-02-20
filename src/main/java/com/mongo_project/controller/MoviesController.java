@@ -30,4 +30,12 @@ public class MoviesController {
         return ResponseEntity.ok(list);
     }
 
+    @GetMapping("/yearAndRating")
+    public ResponseEntity<List<Movies>> getByYearAndRating(@RequestParam int year, @RequestParam double rating){
+        List<Movies> list = movieService.getByIdAndImdbRatingGreaterThan(year, rating);
+        if(list.isEmpty()){
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        }
+        return ResponseEntity.ok(list);
+    }
 }

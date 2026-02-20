@@ -13,8 +13,10 @@ public class Movies {
     private String type;
     private String year;
     private String[] genres;
+    private Imdb imdb;
     
-    public Movies(String name, String rated, String poster, String plot, String type, String year, String[] genres) {
+    public Movies(String name, String rated, String poster, String plot, String type, String year, String[] genres,
+            Imdb imdb) {
         this.name = name;
         this.rated = rated;
         this.poster = poster;
@@ -22,6 +24,15 @@ public class Movies {
         this.type = type;
         this.year = year;
         this.genres = genres;
+        this.imdb = imdb;
+    }
+
+    public Imdb getImdb() {
+        return imdb;
+    }
+
+    public void setImdb(Imdb imdb) {
+        this.imdb = imdb;
     }
 
     public String getName() {
