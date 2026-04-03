@@ -21,6 +21,7 @@ public class CommentEventProducer {
     }
 
     public void sendCommentEvent(CommentEvent commentEvent){
+
         CompletableFuture<SendResult<String, CommentEvent>> future = kafkaTemplate.send(topic, commentEvent.getMovieId() ,commentEvent);
         future.whenComplete((result, ex) -> {
             if(ex == null){

@@ -2,6 +2,7 @@ package com.mongo_project.controller;
 
 import org.springframework.web.bind.annotation.RestController;
 
+import com.mongo_project.entity.Comment;
 import com.mongo_project.entity.CommentResponse;
 import com.mongo_project.service.CommentService;
 
@@ -11,6 +12,8 @@ import java.time.format.DateTimeFormatter;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 
 
@@ -60,5 +63,11 @@ public class MongoDBDemoController {
         }
 
         return ResponseEntity.ok(response);
+    }
+
+    @PostMapping("/comment")
+    public String addComment(@RequestBody Comment comment) {
+        commentService.addComment(comment);
+        return "Comment added successfully!";
     }
 }

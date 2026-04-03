@@ -8,7 +8,7 @@ import org.springframework.stereotype.Component;
 import com.mongo_project.dto.CommentEvent;
 import com.mongo_project.kafka.producer.CommentEventProducer;
 
-@Component
+// @Component
 public class KafkaTestRunner implements CommandLineRunner{
     private final CommentEventProducer producer;
 
