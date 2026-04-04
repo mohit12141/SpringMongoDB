@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.mongo_project.entity.Movies;
 import com.mongo_project.service.MovieService;
+import org.springframework.kafka.core.KafkaTemplate;
 
 
 @RestController

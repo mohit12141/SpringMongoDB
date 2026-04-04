@@ -1,15 +1,20 @@
 package com.mongo_project.entity;
 
+import java.time.Instant;
+
+import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 @Document(collection = "comments")
 public class Comment {
     
+    @Id
+    private String id;
     private String name;
     private String email;
-    private String description;
-    private String date;
-    private String movie_id;
+    private String text;
+    private Instant date;
+    private String movieId;
 
     // Getters and Setters
 
@@ -25,23 +30,27 @@ public class Comment {
     public void setEmail(String email) {
         this.email = email;
     }
-    public String getDescription() {
-        return description;
+    public String getText() {
+        return text;
     }
-    public void setDescription(String description) {
-        this.description = description;
+    public void setText(String text) {
+        this.text = text;
     }
-    public String getDate() {
+    public Instant getDate() {
         return date;
     }
-    public void setDate(String date) {
-        this.date = date;
+    public void setDate(Instant date) {
+        this.date = date;  
     }
-    public String getMovie_id() {
-        return movie_id;
+    public String getMovieId() {
+        return movieId;
     }
-    public void setMovie_id(String movie_id) {
-        this.movie_id = movie_id;
+    public void setMovieId(String movieId) {
+        this.movieId = movieId;
+    }
+    public String getId() {
+        return id;
     }
 
+    
 }
