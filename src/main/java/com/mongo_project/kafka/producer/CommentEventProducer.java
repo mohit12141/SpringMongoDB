@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service;
 
 import com.mongo_project.dto.CommentEvent;
 
-@Service
+// @Service
 public class CommentEventProducer {
     private KafkaTemplate<String, CommentEvent> kafkaTemplate;
     

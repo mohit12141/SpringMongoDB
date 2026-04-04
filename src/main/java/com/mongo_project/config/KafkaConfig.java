@@ -24,7 +24,7 @@ import com.mongo_project.dto.CommentEvent;
 public class KafkaConfig {
     
     @Bean
-    public ProducerFactory<String, CommentEvent> producerFactory(){
+    public ProducerFactory<String, String> producerFactory(){
         Map<String, Object> configMap = new HashMap<>();
         configMap.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, "localhost:9092");
         configMap.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, StringSerializer.class);
@@ -34,7 +34,7 @@ public class KafkaConfig {
     }
 
     @Bean
-    public KafkaTemplate<String, CommentEvent> kafkaTemplate() {
+    public KafkaTemplate<String, String> kafkaTemplate() {
         return new KafkaTemplate<>(producerFactory());
     }
 
