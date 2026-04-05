@@ -9,23 +9,30 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.mongo_project.dto.CommentEvent;
 import com.mongo_project.entity.Comment;
 import com.mongo_project.entity.CommentResponse;
-import com.mongo_project.kafka.producer.CommentEventProducer;
+import com.mongo_project.entity.OutBoxEvent;
 import com.mongo_project.repository.CommentRepository;
+import com.mongo_project.repository.OutboxEventRepository;
 
 @Service
 public class CommentService {
 
     
     private final CommentRepository commentRepository;
+    private final OutboxEventRepository outboxEventRepository;
+    private final ObjectMapper objectMapper;
 
-    private final CommentEventProducer commentEventProducer;
+    
 
-    CommentService(CommentRepository commentRepository, CommentEventProducer commentEventProducer){
+    public CommentService(CommentRepository commentRepository, OutboxEventRepository outboxEventRepository,
+            ObjectMapper objectMapper) {
         this.commentRepository = commentRepository;
-        this.commentEventProducer = commentEventProducer;
+        this.outboxEventRepository = outboxEventRepository;
+        this.objectMapper = objectMapper;
     }
 
     public CommentResponse getComment(int page, int size) {
@@ -73,12 +80,25 @@ public class CommentService {
                 savedComment.getDate()
         );
 
-        // 4. Send the CommentEvent to Kafka
-        try{
-            commentEventProducer.sendCommentEvent(event);
-        } catch (Exception e) {
-            // Handle the exception, e.g., log it
-            System.err.println("Failed to send comment event: " + e.getMessage());
+        // 4. store to outbox collection
+        String payload = null;
+        try {
+            payload = objectMapper.writeValueAsString(event);
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+            System.out.println("Failed to serialize CommentEvent: " + e.getMessage());
+            return;
         }
+        
+
+        OutBoxEvent outboxEvent = new OutBoxEvent(
+            "comment-events",
+            event.getMovieId(),
+            payload,
+            false
+        );
+
+        outboxEventRepository.save(outboxEvent);
+
     }
 }
